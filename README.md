@@ -1,7 +1,7 @@
 # pymongodb
 Mongo ODM using asyncio amd mongo/motor
 
-```
+```python
 from pymongodb.models import MongoDBModel
 from pymongodb.attributes import UnicodeAttribute, ListAttribute, NumberAttribute
 
