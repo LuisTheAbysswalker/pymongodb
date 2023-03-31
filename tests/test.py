@@ -1,7 +1,5 @@
-# pymongodb
-Mongo ODM using asyncio amd mongo/motor
-
-```
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from pymongodb.models import MongoDBModel
 from pymongodb.attributes import UnicodeAttribute, ListAttribute, NumberAttribute
 
@@ -94,4 +92,3 @@ if __name__ == "__main__":
             "$group": {"_id": "movie_id"}
         }
     ])]
-```
