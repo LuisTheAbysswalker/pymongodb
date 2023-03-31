@@ -23,11 +23,11 @@ class MetaModel(AttributeContainerMeta):
     Model metaclass
 
     """
-    def __init__(cls, name, bases, attrs):
-        super(MetaModel, cls).__init__(name, bases, attrs)
-        for attr_name, attribute in cls.get_attributes().items():
+    def __init__(self, name, bases, attrs):
+        super(MetaModel, self).__init__(name, bases, attrs)
+        for attr_name, attribute in self.get_attributes().items():
             if attribute.is_hash_key:
-                cls._hash_key = attr_name
+                self._hash_key = attr_name
 
         if isinstance(attrs, dict):
             for attr_name, attr_obj in attrs.items():
@@ -35,15 +35,15 @@ class MetaModel(AttributeContainerMeta):
                     attr_obj.attr_name = attr_name
 
             if META_CLASS_NAME not in attrs:
-                setattr(cls, META_CLASS_NAME, DefaultMeta)
+                setattr(self, META_CLASS_NAME, DefaultMeta)
 
             # create a custom Model.DoesNotExist derived from pymongodb.exceptions.DoesNotExist,
             # so that "except Model.DoesNotExist:" would not catch other models' exceptions
             if 'DoesNotExist' not in attrs:
                 exception_attrs = {'__module__': attrs.get('__module__')}
-                if hasattr(cls, '__qualname__'):  # On Python 3, Model.DoesNotExist
-                    exception_attrs['__qualname__'] = '{}.{}'.format(cls.__qualname__, 'DoesNotExist')
-                cls.DoesNotExist = type('DoesNotExist', (DoesNotExist, ), exception_attrs)
+                if hasattr(self, '__qualname__'):  # On Python 3, Model.DoesNotExist
+                    exception_attrs['__qualname__'] = '{}.{}'.format(self.__qualname__, 'DoesNotExist')
+                self.DoesNotExist = type('DoesNotExist', (DoesNotExist,), exception_attrs)
 
 
 @add_metaclass(MetaModel)
